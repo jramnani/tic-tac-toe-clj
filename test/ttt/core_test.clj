@@ -61,36 +61,36 @@
 
   (testing "Winning: Top row wins the game."
     (let [player "X"
-          board ["X","X","X",
-                 "", "", "",
-                 "", "", ""]]
+          board ["X" "X" "X"
+                 ""  ""  ""
+                 ""  ""  ""]]
       (is (winner? board player))))
 
   (testing "Winning: Middle row wins the game."
     (let [player "X"
-          board ["", "", "",
-                 "X","X","X",
-                 "", "", ""]]
+          board [""  ""  ""
+                 "X" "X" "X",
+                 ""  ""  ""]]
       (is (winner? board player))))
 
   (testing "Winning: Bottom row wins the game."
     (let [player "X"
-          board ["", "", "",
-                 "", "", "",
-                 "X","X","X"]]
+          board [""  ""  ""
+                 ""  ""  ""
+                 "X" "X" "X"]]
       (is (winner? board player))))
 
   (testing "Winning: Top-left diagonal wins the game."
     (let [player "X"
-          board ["X", "",  "",
-                 "",  "X", "",
-                 "",  "",  "X",]]
+          board ["X"  ""   ""
+                 ""   "X"  ""
+                 ""   ""   "X"]]
       (is (winner? board player))))
 
   (testing "Winning: Top-right diagonal wins the game."
     (let [player "X"
-          board ["",  "",  "X",
-                 "",  "X", "",
-                 "X", "",  "",]]
+          board [""  ""  "X"
+                 ""  "X" ""
+                 "X" ""  ""]]
       (is (winner? board player))))
   )

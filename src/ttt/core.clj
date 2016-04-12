@@ -29,5 +29,4 @@
         (player-wins? middle-row-spots)
         (player-wins? bottom-row-spots)
         (player-wins? top-left-diagonal-spots)
-        (player-wins? top-right-diagonal-spots)
-        )))
+        (player-wins? top-right-diagonal-spots))))
