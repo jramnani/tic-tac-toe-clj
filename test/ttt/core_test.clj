@@ -41,6 +41,24 @@
       (is (thrown? IndexOutOfBoundsException
                    (get-spot initial-board spot)))))
 
+  (testing "Given mutiple spots on the board, return a list of the players at those spots."
+    (let [test-board ["X" "X" "X"
+                      ""  ""  ""
+                      ""  ""  ""
+                      ]
+          spots [0 1 2]
+          ]
+      (is (= '("X" "X" "X")
+             (get-spots test-board spots)))))
+
+  (testing "Given an empty list of spots, return an empty list."
+    (let [test-board ["X" "X" "X"
+                      ""  ""  ""
+                      ""  ""  ""]
+          spots []]
+      (is (= '()
+             (get-spots test-board spots)))))
+
   ;(testing "Winning: Top row wins the game."
     ;(let [player "X"
           ;board ["X","X","X",
