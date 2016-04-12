@@ -21,6 +21,8 @@
   (let [player-wins? (partial same-player-on-spots? player)
         top-row-spots (get-spots board [0 1 2])
         middle-row-spots (get-spots board [3 4 5])
+        bottom-row-spots (get-spots board [6 7 8])
         ]
     (or (player-wins? top-row-spots)
-        (player-wins? middle-row-spots))))
+        (player-wins? middle-row-spots)
+        (player-wins? bottom-row-spots))))
