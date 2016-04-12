@@ -14,6 +14,13 @@
 (defn get-spots [board spots]
   (map #(get-spot board %1) spots))
 
+(defn- same-player-on-spots? [player spots]
+  (every? #(= player %1) spots))
+
 (defn winner? [board player]
-  (let [top-row-spots (get-spots board [0 1 2])]
-    (every? #(= player %1) top-row-spots)))
+  (let [player-wins? (partial same-player-on-spots? player)
+        top-row-spots (get-spots board [0 1 2])
+        middle-row-spots (get-spots board [3 4 5])
+        ]
+    (or (player-wins? top-row-spots)
+        (player-wins? middle-row-spots))))
