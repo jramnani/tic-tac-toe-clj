@@ -4,4 +4,6 @@
   (vec (repeatedly 9 str)))
 
 (defn take-spot [board player spot]
-  (assoc board spot player))
+  (if (< spot (count board))
+    (assoc board spot player)
+    board))

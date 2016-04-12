@@ -12,4 +12,11 @@
           spot 1
           player "X"
           new-board (take-spot test-board player spot)]
-      (is (= player (nth new-board spot))))))
+      (is (= player (nth new-board spot)))))
+
+  (testing "Given a spot that's not on the board, return the existing board."
+    (let [test-board (create-board)
+          player "X"
+          bad-spot 100]
+      (is (= test-board
+             (take-spot test-board player bad-spot))))))
