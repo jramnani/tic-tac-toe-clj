@@ -86,4 +86,11 @@
                  "",  "X", "",
                  "",  "",  "X",]]
       (is (winner? board player))))
+
+  (testing "Winning: Top-right diagonal wins the game."
+    (let [player "X"
+          board ["",  "",  "X",
+                 "",  "X", "",
+                 "X", "",  "",]]
+      (is (winner? board player))))
   )

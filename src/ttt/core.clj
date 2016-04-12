@@ -23,9 +23,11 @@
         middle-row-spots (get-spots board [3 4 5])
         bottom-row-spots (get-spots board [6 7 8])
         top-left-diagonal-spots (get-spots board [0 4 8])
+        top-right-diagonal-spots (get-spots board [2 4 6])
         ]
     (or (player-wins? top-row-spots)
         (player-wins? middle-row-spots)
         (player-wins? bottom-row-spots)
         (player-wins? top-left-diagonal-spots)
+        (player-wins? top-right-diagonal-spots)
         )))
