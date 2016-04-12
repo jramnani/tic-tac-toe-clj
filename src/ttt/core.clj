@@ -14,9 +14,6 @@
 (defn get-spots [board spots]
   (map #(get-spot board %1) spots))
 
-;(defn winner? [board player]
-  ;(let [top-row-winner (every? #(= player %1)
-                               ;(vec (nth board 0)
-                                    ;(nth board 1)
-                                    ;(nth board 2)))]
-    ;top-row-winner))
+(defn winner? [board player]
+  (let [top-row-spots (get-spots board [0 1 2])]
+    (every? #(= player %1) top-row-spots)))

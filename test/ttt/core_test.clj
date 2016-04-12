@@ -59,10 +59,10 @@
       (is (= '()
              (get-spots test-board spots)))))
 
-  ;(testing "Winning: Top row wins the game."
-    ;(let [player "X"
-          ;board ["X","X","X",
-                 ;"", "", "",
-                 ;"", "", ""]]
-      ;(is (winner? player board))))
+  (testing "Winning: Top row wins the game."
+    (let [player "X"
+          board ["X","X","X",
+                 "", "", "",
+                 "", "", ""]]
+      (is (winner? board player))))
   )
