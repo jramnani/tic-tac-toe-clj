@@ -19,4 +19,32 @@
           player "X"
           bad-spot 100]
       (is (= test-board
-             (take-spot test-board player bad-spot))))))
+             (take-spot test-board player bad-spot)))))
+
+  (testing "Given a spot on the board, return the player on that spot."
+    (let [initial-board (create-board)
+          player "X"
+          spot 1
+          test-board (take-spot initial-board player spot)]
+      (is (= player
+             (get-spot test-board spot)))))
+
+  (testing "Given an empty spot on the board, return the empty string."
+    (let [initial-board (create-board)
+          spot 1
+          expected-player ""]
+      (is (= "" (get-spot initial-board spot)))))
+
+  (testing "Given a spot that's not on the board, throw an exception."
+    (let [initial-board (create-board)
+          spot 100]
+      (is (thrown? IndexOutOfBoundsException
+                   (get-spot initial-board spot)))))
+
+  ;(testing "Winning: Top row wins the game."
+    ;(let [player "X"
+          ;board ["X","X","X",
+                 ;"", "", "",
+                 ;"", "", ""]]
+      ;(is (winner? player board))))
+  )

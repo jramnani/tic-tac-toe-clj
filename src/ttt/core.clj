@@ -7,3 +7,13 @@
   (if (< spot (count board))
     (assoc board spot player)
     board))
+
+(defn get-spot [board spot]
+  (nth board spot))
+
+;(defn winner? [board player]
+  ;(let [top-row-winner (every? #(= player %1)
+                               ;(vec (nth board 0)
+                                    ;(nth board 1)
+                                    ;(nth board 2)))]
+    ;top-row-winner))
