@@ -8,7 +8,9 @@
 
 (defn row->str [row]
   (let [spots (map spot->str row)]
-    (format "|%s|%s|%s|" (first spots) (second spots) (nth spots 2))))
+    (if (empty? spots)
+      ""
+    (format "|%s|%s|%s|" (first spots) (second spots) (nth spots 2)))))
 
 (defn board->str [board]
   (let [rows (partition 3 board)]
