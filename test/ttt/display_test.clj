@@ -28,14 +28,13 @@
           expected-str "|_X_|_O_|_X_|"]
       (is (= expected-str (row->str test-row)))))
 
-  (testing "Given a spot on the board, return a string to represent the player on the spot."
-    (let [player-one [4 "X"]
-          player-two [4 "O"]
-          no-player [4 ""]
-          player-one-str "_X_"
-          player-two-str "_O_"
-          no-player-str "_4_"]
-      (is (= player-one-str (spot->str player-one)))
-      (is (= player-two-str (spot->str player-two)))
-      (is (= no-player-str (spot->str no-player))))))
+  (testing "Given an empty spot, show the spot's index on the board."
+    (let [spot [4 ""]
+          expected-str "_4_"]
+      (is (= expected-str (spot->str spot)))))
+
+  (testing "Given a spot with a player on it, show the player on the board."
+    (let [spot [4 "X"]
+          expected-str "_X_"]
+      (is (= expected-str (spot->str spot))))))
 
