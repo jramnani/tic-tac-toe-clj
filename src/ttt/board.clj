@@ -4,7 +4,8 @@
   (vec (repeatedly 9 str)))
 
 (defn valid-spot? [board spot]
-  (and (< spot (count board))))
+  (and (< spot (count board))
+       (empty? (nth board spot))))
 
 (defn take-spot [board player spot]
   (if (valid-spot? board spot)

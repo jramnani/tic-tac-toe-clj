@@ -9,8 +9,17 @@
 
   (testing "A valid spot is within the bounds of the board."
     (let [test-board (create-board)
+          good-spot 0
+          bad-spot 100]
+      (is (valid-spot? test-board good-spot))
+      (is (not (valid-spot? test-board bad-spot)))))
+
+  (testing "A valid spot is not already taken."
+    (let [test-board ["X" "" ""
+                      ""  "" ""
+                      ""  "" ""]
           spot 0]
-      (is (valid-spot? test-board spot))))
+      (is (not (valid-spot? test-board spot)))))
 
   (testing "Take a spot on the board"
     (let [test-board (create-board)
