@@ -1,6 +1,6 @@
 (ns ttt.display-test
   (:require [clojure.test :refer :all]
-            [ttt.core :refer :all]
+            [ttt.board :refer :all]
             [ttt.display :refer :all]))
 
 (def empty-board-string
@@ -13,7 +13,7 @@
     (let [test-board (create-board)]
       (is (= empty-board-string (board->str test-board)))))
 
-  (testing "Given an row with no elements, return the empty string"
+  (testing "Given a row with no elements, return the empty string"
     (let [empty-row []
           expected-str ""]
       (is (= expected-str (row->str empty-row)))))

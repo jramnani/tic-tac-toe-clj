@@ -1,6 +1,6 @@
-(ns ttt.core-test
+(ns ttt.board-test
   (:require [clojure.test :refer :all]
-            [ttt.core :refer :all]))
+            [ttt.board :refer :all]))
 
 (deftest board-test
   (testing "Create an empty board."
