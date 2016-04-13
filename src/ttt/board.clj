@@ -3,20 +3,20 @@
 (defn create-board []
   (vec (repeatedly 9 str)))
 
-(defn valid-spot? [board spot]
-  (and (< spot (count board))
-       (empty? (nth board spot))))
-
-(defn take-spot [board player spot]
-  (if (valid-spot? board spot)
-    (assoc board spot player)
-    board))
-
 (defn get-spot [board spot]
   (nth board spot))
 
 (defn get-spots [board spots]
   (map #(get-spot board %1) spots))
+
+(defn valid-spot? [board spot]
+  (and (< spot (count board))
+       (empty? (get-spot board spot))))
+
+(defn take-spot [board player spot]
+  (if (valid-spot? board spot)
+    (assoc board spot player)
+    board))
 
 (defn- same-player-on-spots? [player spots]
   (every? #(= player %1) spots))
