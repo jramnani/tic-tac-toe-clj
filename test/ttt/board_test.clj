@@ -7,6 +7,11 @@
     (let [test-board (create-board)]
       (is (= 9 (count test-board)))))
 
+  (testing "A valid spot is within the bounds of the board."
+    (let [test-board (create-board)
+          spot 0]
+      (is (valid-spot? test-board spot))))
+
   (testing "Take a spot on the board"
     (let [test-board (create-board)
           spot 1

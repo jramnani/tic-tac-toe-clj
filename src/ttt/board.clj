@@ -3,8 +3,11 @@
 (defn create-board []
   (vec (repeatedly 9 str)))
 
+(defn valid-spot? [board spot]
+  (and (< spot (count board))))
+
 (defn take-spot [board player spot]
-  (if (< spot (count board))
+  (if (valid-spot? board spot)
     (assoc board spot player)
     board))
 
