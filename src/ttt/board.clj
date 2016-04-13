@@ -30,3 +30,7 @@
         (player-wins? bottom-row-spots)
         (player-wins? top-left-diagonal-spots)
         (player-wins? top-right-diagonal-spots))))
+
+(defn draw? [board players]
+  (and (not-any? #(empty? %1) board)
+       (not-any? #(winner? board %1) players)))
