@@ -24,11 +24,24 @@
 )
 
 (deftest make-human-move-test
-  (testing "Prompt the user to pick a spot"
+  (testing "Prompt the user to pick a spot."
     (let [test-board (board/create-board)
           player "X"
           result (atom nil)
+          mock-reader (fn [] nil)
           mock-writer (fn [msg] (reset! result msg))
           ;; executing for side effects
-          _ (make-human-move test-board player mock-writer)]
-      (is (= "Pick a spot" @result)))))
+          _ (make-human-move test-board player mock-reader mock-writer)]
+      (is (= "Pick a spot" @result))))
+
+  (testing "Get the user's spot by reading input."
+    (let [test-board (board/create-board)
+          player "X"
+          spot "4"
+          result (atom nil)
+          mock-writer (fn [msg] (reset! result msg))
+          mock-reader (fn [] (reset! result spot))
+          ;; executing for side effects
+          _ (make-human-move test-board player mock-reader mock-writer)]
+      (is (= spot @result))))
+)

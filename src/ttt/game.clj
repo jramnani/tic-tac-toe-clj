@@ -7,5 +7,8 @@
         spot (first available-spots)]
     (board/take-spot board player spot)))
 
-(defn make-human-move [board player writer]
-  (writer "Pick a spot"))
+(defn make-human-move [board player reader writer]
+  (writer "Pick a spot")
+  (let [input (reader)]
+    board)
+  )
