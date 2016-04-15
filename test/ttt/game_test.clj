@@ -22,3 +22,13 @@
                           ""  ""  ""]]
       (is (= expected-board (make-computer-move test-board player)))))
 )
+
+(deftest make-human-move-test
+  (testing "Prompt the user to pick a spot"
+    (let [test-board (board/create-board)
+          player "X"
+          result (atom nil)
+          mock-writer (fn [msg] (reset! result msg))
+          ;; executing for side effects
+          _ (make-human-move test-board player mock-writer)]
+      (is (= "Pick a spot" @result)))))
