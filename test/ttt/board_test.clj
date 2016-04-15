@@ -2,11 +2,12 @@
   (:require [clojure.test :refer :all]
             [ttt.board :refer :all]))
 
-(deftest board-test
+(deftest create-board-test
   (testing "Create an empty board."
     (let [test-board (create-board)]
-      (is (= 9 (count test-board)))))
+      (is (= 9 (count test-board))))))
 
+(deftest valid-spot-test
   (testing "A valid spot is within the bounds of the board."
     (let [test-board (create-board)
           spot 0
@@ -19,8 +20,9 @@
                       ""  "" ""
                       ""  "" ""]
           spot 0]
-      (is (not (valid-spot? test-board spot)))))
+      (is (not (valid-spot? test-board spot))))))
 
+(deftest take-spot-test
   (testing "Take a spot on the board"
     (let [test-board (create-board)
           spot 1
@@ -33,8 +35,9 @@
           player "X"
           bad-spot 100]
       (is (= test-board
-             (take-spot test-board player bad-spot)))))
+             (take-spot test-board player bad-spot))))))
 
+(deftest get-spot-test
   (testing "Given a spot on the board, return the player on that spot."
     (let [initial-board (create-board)
           player "X"
@@ -71,8 +74,9 @@
                       ""  ""  ""]
           spots []]
       (is (= '()
-             (get-spots test-board spots)))))
+             (get-spots test-board spots))))))
 
+(deftest available-spots-test
   (testing "Given an empty board, return the index of all spots on the board."
     (let [test-board (create-board)
           expected-spots (into [] (range 9))]
@@ -90,8 +94,9 @@
                          (take-spot "O" 1)
                          (take-spot "X" 2))
           expected-spots [3 4 5 6 7 8]]
-      (is (= expected-spots (available-spots test-board)))))
+      (is (= expected-spots (available-spots test-board))))))
 
+(deftest winning-conditions-test
   (testing "Winning: Top row wins the game."
     (let [player "X"
           board ["X" "X" "X"
@@ -170,5 +175,4 @@
           board ["X" "X" "X"
                  "X" "O" "O"
                  "O" "X" "O"]]
-      (is (not (draw? board [player-one player-two])))))
-)
+      (is (not (draw? board [player-one player-two]))))))
