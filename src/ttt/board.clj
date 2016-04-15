@@ -18,6 +18,10 @@
     (assoc board spot player)
     board))
 
+(defn available-spots [board]
+  (let [available-spots (keep-indexed #(if (empty? %2) %1) board)]
+    available-spots))
+
 (defn- same-player-on-spots? [player spots]
   (every? #(= player %1) spots))
 

@@ -73,6 +73,25 @@
       (is (= '()
              (get-spots test-board spots)))))
 
+  (testing "Given an empty board, return the index of all spots on the board."
+    (let [test-board (create-board)
+          expected-spots (into [] (range 9))]
+      (is (= expected-spots (available-spots test-board)))))
+
+  (testing "Given a board with a player on it, return the index of avaialble spots on the board."
+    (let [test-board (-> (create-board)
+                         (take-spot "X" 0))
+          expected-spots [1 2 3 4 5 6 7 8]]
+      (is (= expected-spots (available-spots test-board)))))
+
+  (testing "Given a board with many players on it, return the index of avaialble spots on the board."
+    (let [test-board (-> (create-board)
+                         (take-spot "X" 0)
+                         (take-spot "O" 1)
+                         (take-spot "X" 2))
+          expected-spots [3 4 5 6 7 8]]
+      (is (= expected-spots (available-spots test-board)))))
+
   (testing "Winning: Top row wins the game."
     (let [player "X"
           board ["X" "X" "X"
