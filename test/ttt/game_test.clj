@@ -49,6 +49,8 @@
   (testing "Given the user picks an invalid spot, then notify and prompt the user again."
     (let [test-board (board/create-board)
           player "X"
+          ;; the read-queue must contain a valid spot, or the test will
+          ;; fail due to recursion limits.
           read-queue (atom '("100" "4"))
           mock-reader (fn []
                         (let [result (peek @read-queue)]
