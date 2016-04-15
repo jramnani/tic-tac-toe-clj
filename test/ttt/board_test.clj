@@ -9,9 +9,9 @@
 
   (testing "A valid spot is within the bounds of the board."
     (let [test-board (create-board)
-          good-spot 0
+          spot 0
           bad-spot 100]
-      (is (valid-spot? test-board good-spot))
+      (is (valid-spot? test-board spot))
       (is (not (valid-spot? test-board bad-spot)))))
 
   (testing "A valid spot is not already taken."
@@ -92,6 +92,27 @@
           board [""  ""  ""
                  ""  ""  ""
                  "X" "X" "X"]]
+      (is (winner? board player))))
+
+  (testing "Winning: Left column wins the game."
+    (let [player "X"
+          board ["X" "" ""
+                 "X" "" ""
+                 "X" "" ""]]
+      (is (winner? board player))))
+
+  (testing "Winning: Middle column wins the game."
+    (let [player "X"
+          board ["" "X" ""
+                 "" "X" ""
+                 "" "X" ""]]
+      (is (winner? board player))))
+
+  (testing "Winning: Right column wins the game."
+    (let [player "X"
+          board ["" "" "X"
+                 "" "" "X"
+                 "" "" "X"]]
       (is (winner? board player))))
 
   (testing "Winning: Top-left diagonal wins the game."
