@@ -27,8 +27,9 @@
   (testing "Prompt the user to pick a spot."
     (let [test-board (board/create-board)
           player "X"
+          spot "4"
           result (atom nil)
-          mock-reader (fn [] nil)
+          mock-reader (fn [] spot)
           mock-writer (fn [msg] (reset! result msg))
           ;; executing for side effects
           _ (make-human-move test-board player mock-reader mock-writer)]
@@ -39,9 +40,25 @@
           player "X"
           spot "4"
           result (atom nil)
-          mock-writer (fn [msg] (reset! result msg))
+          mock-writer (fn [msg] nil)
           mock-reader (fn [] (reset! result spot))
           ;; executing for side effects
           _ (make-human-move test-board player mock-reader mock-writer)]
       (is (= spot @result))))
+
+  (testing "Given the user picks an invalid spot, then notify and prompt the user again."
+    (let [test-board (board/create-board)
+          player "X"
+          read-queue (atom '("100" "4"))
+          mock-reader (fn []
+                        (let [result (peek @read-queue)]
+                          (if result
+                            (reset! read-queue (pop @read-queue)))
+                          result))
+          write-result (atom [])
+          mock-writer (fn [msg] (reset! write-result (conj @write-result msg)))
+          ;; executing for side effects
+          _ (make-human-move test-board player mock-reader mock-writer)]
+      (is (some #{"Invalid spot"} @write-result))
+      (is (= 2 (count (filter #{"Pick a spot"} @write-result))))))
 )

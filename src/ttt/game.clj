@@ -1,5 +1,6 @@
 (ns ttt.game
-  (require [ttt.board :as board]))
+  (require [clojure.string :as string]
+           [ttt.board :as board]))
 
 
 (defn make-computer-move [board player]
@@ -9,6 +10,10 @@
 
 (defn make-human-move [board player reader writer]
   (writer "Pick a spot")
-  (let [input (reader)]
-    board)
-  )
+  (let [input (reader)
+        spot (Integer/parseInt (string/trim input))]
+    (if (board/valid-spot? board spot)
+      board
+      (do
+        (writer "Invalid spot")
+        (make-human-move board player reader writer)))))
