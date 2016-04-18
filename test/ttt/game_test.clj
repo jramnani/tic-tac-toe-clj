@@ -54,7 +54,7 @@
           read-queue (atom '("100" "4"))
           mock-reader (fn []
                         (let [result (peek @read-queue)]
-                          (if result
+                          (when result
                             (reset! read-queue (pop @read-queue)))
                           result))
           write-result (atom [])
