@@ -9,8 +9,8 @@
 
 (defn prompt [message-key]
   (condp = message-key
-    :pick-spot (println "Pick a spot")
-    :invalid-spot (println "Invalid spot")
+    :pick-spot "Pick a spot"
+    :invalid-spot "Invalid spot"
     nil))
 
 ;(defn get-move [board player reader writer]
