@@ -5,7 +5,7 @@
            [ttt.game :refer :all]))
 
 
-(deftest make-computer-move-test
+(deftest make-ai-move-test
   (testing "Dumb AI: Computer takes the first spot on an empty board."
     (let [test-board (board/create-board)
           player O
@@ -25,7 +25,7 @@
       (is (= expected-board (make-move test-board player)))))
 )
 
-(deftest make-human-move-test
+(deftest get-human-move-test
   (testing "Prompt the user to pick a spot."
     (let [test-board (board/create-board)
           player X
@@ -34,7 +34,7 @@
           mock-reader (fn [] spot)
           mock-writer (fn [msg] (reset! result msg))
           ;; executing for side effects
-          _ (make-move test-board player mock-reader mock-writer)]
+          _ (get-human-move test-board player mock-reader mock-writer)]
       (is (= "Pick a spot" @result))))
 
   (testing "Get the user's spot by reading input."
@@ -45,7 +45,7 @@
           mock-writer (fn [msg] nil)
           mock-reader (fn [] (reset! result spot))
           ;; executing for side effects
-          _ (make-move test-board player mock-reader mock-writer)]
+          _ (get-human-move test-board player mock-reader mock-writer)]
       (is (= spot @result))))
 
   (testing "Given the user picks an invalid spot, then notify and prompt the user again."
@@ -62,22 +62,30 @@
           write-result (atom [])
           mock-writer (fn [msg] (reset! write-result (conj @write-result msg)))
           ;; executing for side effects
-          _ (make-move test-board player mock-reader mock-writer)]
+          _ (get-human-move test-board player mock-reader mock-writer)]
       (is (some #{"Invalid spot"} @write-result))
       (is (= 2 (count (filter #{"Pick a spot"} @write-result))))))
 
-  (testing "Given the user picks a valid spot, then take the spot on the board."
+  (testing "Given the user picks a valid spot, then return the spot as an Integer."
     (let [test-board (board/create-board)
           player X
           spot "4"
+          expected-spot 4
           mock-reader (fn [] spot)
-          mock-writer (fn [msg] nil)
-          expected-board [E E E
-                          E X E
-                          E E E]
-          actual-board (make-move test-board player mock-reader mock-writer)]
-      (is (= expected-board actual-board))))
+          mock-writer (fn [msg] nil)]
+      (is (= expected-spot
+             (get-human-move test-board player mock-reader mock-writer)))))
 )
+
+(deftest make-human-move-test
+  (testing "Given the user picks a valid spot, then place them on the spot."
+    (with-redefs [get-human-move (fn [_ & args] 4)]
+      (let [test-board (board/create-board)
+            player X
+            expected-board [E E E
+                            E X E
+                            E E E]]
+        (is (= expected-board (make-move test-board player)))))))
 
 (deftest get-winner-test
   (testing "Given a board where player-one wins, return player-one."
@@ -111,3 +119,4 @@
 
   (testing "Prompt: Invalid message-key returns nil."
     (is (= nil (prompt :bogus-message-key)))))
+

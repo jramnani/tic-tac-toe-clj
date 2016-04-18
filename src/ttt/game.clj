@@ -13,37 +13,42 @@
     :invalid-spot "Invalid spot"
     nil))
 
-;(defn get-move [board player reader writer]
-  ;(prompt :pick-spot)
-  ;(let [raw-input (read-line)
-        ;spot (Integer/parseInt raw-input)]
-    ;spot))
+(defn get-human-move
+  "Prompt the user to pick a spot. Return the user's choice as an Integer."
+  ([board player]
+   (get-human-move board player read-line println))
 
+  ([board player reader writer]
+   (writer (prompt :pick-spot))
+   (let [input (reader)
+         spot (Integer/parseInt (string/trim input))]
+     (if (board/valid-spot? board spot)
+       spot
+       (do
+         (writer (prompt :invalid-spot))
+         (get-human-move board player reader writer))))))
 
-(defmulti make-move (fn [board player & args] player))
-(defmethod make-move player-two
-  [board player & args]
+(defn get-ai-move [board player]
   (let [available-spots (board/available-spots board)
         spot (first available-spots)]
     (when spot
-      (board/take-spot board player spot)))
-  )
+      spot)))
+
+(defmulti make-move (fn [board player & args] player))
+
+(defmethod make-move player-two
+  [board player & args]
+  (let [spot (get-ai-move board player)]
+    (when spot
+      (board/take-spot board player spot))))
 
 (defmethod make-move player-one
   ([board player]
    (make-move board player read-line println))
 
   ([board player reader writer]
-  (writer "Pick a spot")
-  (let [input (reader)
-        spot (Integer/parseInt (string/trim input))]
-    (if (board/valid-spot? board spot)
-      (board/take-spot board player spot)
-      (do
-        (writer "Invalid spot")
-        ;(prompt :invalid-spot)
-        (make-move board player reader writer)))))
-  )
+   (let [spot (get-human-move board player reader writer)]
+     (board/take-spot board player spot))))
 
 (defn get-winner [board players]
   (some #(if (rules/winner? board %1) %1) players))
