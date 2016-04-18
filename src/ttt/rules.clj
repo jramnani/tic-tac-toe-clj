@@ -28,3 +28,8 @@
 (defn draw? [board players]
   (and (not-any? #(empty? %1) board)
        (not-any? #(winner? board %1) players)))
+
+(defn game-over? [board players]
+  (or (some #(winner? board %1) players)
+      (draw? board players)
+      (empty? players)))

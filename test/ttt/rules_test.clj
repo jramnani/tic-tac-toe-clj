@@ -84,3 +84,37 @@
                  "X" "O" "O"
                  "O" "X" "O"]]
       (is (not (draw? board [player-one player-two]))))))
+
+(deftest game-over-test
+  (testing "Given a blank board, return false."
+    (let [test-board (board/create-board)
+          players ["X" "O"]]
+      (is (not (game-over? test-board players)))))
+
+  (testing "Given a game still in progress, return false."
+    (let [test-board ["X" "O" ""
+                      ""  ""  ""
+                      ""  ""  ""]
+          players ["X" "O"]]
+      (is (not (game-over? test-board players)))))
+
+  (testing "Given a board where a player has won, return true."
+    (let [test-board ["X" "X" "X"
+                      ""  ""  ""
+                      ""  ""  ""]
+          players ["X" "O"]]
+      (is (game-over? test-board players))))
+
+  (testing "Given a board that's a draw, return true."
+    (let [test-board ["X" "O" "X"
+                      "O" "X" "O"
+                      "O" "X" "O"]
+          players ["X" "O"]]
+      (is (game-over? test-board players))))
+
+  (testing "Given a board and no players, return true."
+    (let [test-board (board/create-board)
+          players []]
+      (is (game-over? test-board players))))
+
+)
