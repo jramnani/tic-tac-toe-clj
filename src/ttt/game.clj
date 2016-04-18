@@ -20,3 +20,6 @@
       (do
         (writer "Invalid spot")
         (make-human-move board player reader writer)))))
+
+(defn get-winner [board players]
+  (some #(if (rules/winner? board %1) %1) players))
