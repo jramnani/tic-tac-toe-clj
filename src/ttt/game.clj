@@ -1,7 +1,10 @@
 (ns ttt.game
   (require [clojure.string :as string]
-           [ttt.board :as board]))
+           [ttt.board :as board]
+           [ttt.rules :as rules]))
 
+(def player-one "X")
+(def player-two "O")
 
 (defn make-computer-move [board player]
   (let [available-spots (board/available-spots board)

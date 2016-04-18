@@ -1,32 +1,34 @@
 (ns ttt.game-test
   (require [clojure.test :refer :all]
+           [ttt.test-helper :refer :all]
            [ttt.board :as board]
            [ttt.game :refer :all]))
+
 
 (deftest make-computer-move-test
   (testing "Dumb AI: Computer takes the first spot on an empty board."
     (let [test-board (board/create-board)
-          player "O"
-          expected-board ["O" "" ""
-                          ""  "" ""
-                          ""  "" ""]]
+          player O
+          expected-board [O E E
+                          E E E
+                          E E E]]
       (is (= expected-board (make-computer-move test-board player)))))
 
   (testing "Dumb AI: Given a board with a player on it, take the first available spot."
     (let [test-board (-> (board/create-board)
-                         (board/take-spot "X" 0)
-                         (board/take-spot "X" 1))
-          player "O"
-          expected-board ["X" "X" "O"
-                          ""  ""  ""
-                          ""  ""  ""]]
+                         (board/take-spot X 0)
+                         (board/take-spot X 1))
+          player O
+          expected-board [X X O
+                          E E E
+                          E E E]]
       (is (= expected-board (make-computer-move test-board player)))))
 )
 
 (deftest make-human-move-test
   (testing "Prompt the user to pick a spot."
     (let [test-board (board/create-board)
-          player "X"
+          player X
           spot "4"
           result (atom nil)
           mock-reader (fn [] spot)
@@ -37,7 +39,7 @@
 
   (testing "Get the user's spot by reading input."
     (let [test-board (board/create-board)
-          player "X"
+          player X
           spot "4"
           result (atom nil)
           mock-writer (fn [msg] nil)
@@ -48,7 +50,7 @@
 
   (testing "Given the user picks an invalid spot, then notify and prompt the user again."
     (let [test-board (board/create-board)
-          player "X"
+          player X
           ;; the read-queue must contain a valid spot, or the test will
           ;; fail due to recursion limits.
           read-queue (atom '("100" "4"))
@@ -66,13 +68,13 @@
 
   (testing "Given the user picks a valid spot, then take the spot on the board."
     (let [test-board (board/create-board)
-          player "X"
+          player X
           spot "4"
           mock-reader (fn [] spot)
           mock-writer (fn [msg] nil)
-          expected-board ["" ""  ""
-                          "" "X" ""
-                          "" ""  ""]
+          expected-board [E E E
+                          E X E
+                          E E E]
           actual-board (make-human-move test-board player mock-reader mock-writer)]
       (is (= expected-board actual-board))))
 )
