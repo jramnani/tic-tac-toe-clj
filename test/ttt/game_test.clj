@@ -102,3 +102,15 @@
       (is (= nil (get-winner test-board players)))))
 )
 
+(deftest prompt-test
+  (testing "Prompt: Pick spot."
+    (is (= "Pick a spot\n" (with-out-str
+                             (prompt :pick-spot)))))
+
+  (testing "Prompt: Invalid spot."
+    (is (= "Invalid spot\n" (with-out-str
+                              (prompt :invalid-spot)))))
+
+  (testing "Prompt: Invalid message-key returns empty string"
+    (is (= "" (with-out-str
+                 (prompt :bogus-message-key))))))

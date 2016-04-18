@@ -7,6 +7,19 @@
 (def player-one "X")
 (def player-two "O")
 
+(defn prompt [message-key]
+  (condp = message-key
+    :pick-spot (println "Pick a spot")
+    :invalid-spot (println "Invalid spot")
+    nil))
+
+;(defn get-move [board player reader writer]
+  ;(prompt :pick-spot)
+  ;(let [raw-input (read-line)
+        ;spot (Integer/parseInt raw-input)]
+    ;spot))
+
+
 (defmulti make-move (fn [board player & args] player))
 (defmethod make-move player-two
   [board player & args]
@@ -28,6 +41,7 @@
       (board/take-spot board player spot)
       (do
         (writer "Invalid spot")
+        ;(prompt :invalid-spot)
         (make-move board player reader writer)))))
   )
 
