@@ -63,4 +63,16 @@
           _ (make-human-move test-board player mock-reader mock-writer)]
       (is (some #{"Invalid spot"} @write-result))
       (is (= 2 (count (filter #{"Pick a spot"} @write-result))))))
+
+  (testing "Given the user picks a valid spot, then take the spot on the board."
+    (let [test-board (board/create-board)
+          player "X"
+          spot "4"
+          mock-reader (fn [] spot)
+          mock-writer (fn [msg] nil)
+          expected-board ["" ""  ""
+                          "" "X" ""
+                          "" ""  ""]
+          actual-board (make-human-move test-board player mock-reader mock-writer)]
+      (is (= expected-board actual-board))))
 )

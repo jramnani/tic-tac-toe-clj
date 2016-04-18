@@ -13,7 +13,7 @@
   (let [input (reader)
         spot (Integer/parseInt (string/trim input))]
     (if (board/valid-spot? board spot)
-      board
+      (board/take-spot board player spot)
       (do
         (writer "Invalid spot")
         (make-human-move board player reader writer)))))
