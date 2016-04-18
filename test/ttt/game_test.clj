@@ -12,7 +12,7 @@
           expected-board [O E E
                           E E E
                           E E E]]
-      (is (= expected-board (make-computer-move test-board player)))))
+      (is (= expected-board (make-move test-board player)))))
 
   (testing "Dumb AI: Given a board with a player on it, take the first available spot."
     (let [test-board (-> (board/create-board)
@@ -22,7 +22,7 @@
           expected-board [X X O
                           E E E
                           E E E]]
-      (is (= expected-board (make-computer-move test-board player)))))
+      (is (= expected-board (make-move test-board player)))))
 )
 
 (deftest make-human-move-test
@@ -34,7 +34,7 @@
           mock-reader (fn [] spot)
           mock-writer (fn [msg] (reset! result msg))
           ;; executing for side effects
-          _ (make-human-move test-board player mock-reader mock-writer)]
+          _ (make-move test-board player mock-reader mock-writer)]
       (is (= "Pick a spot" @result))))
 
   (testing "Get the user's spot by reading input."
@@ -45,7 +45,7 @@
           mock-writer (fn [msg] nil)
           mock-reader (fn [] (reset! result spot))
           ;; executing for side effects
-          _ (make-human-move test-board player mock-reader mock-writer)]
+          _ (make-move test-board player mock-reader mock-writer)]
       (is (= spot @result))))
 
   (testing "Given the user picks an invalid spot, then notify and prompt the user again."
@@ -62,7 +62,7 @@
           write-result (atom [])
           mock-writer (fn [msg] (reset! write-result (conj @write-result msg)))
           ;; executing for side effects
-          _ (make-human-move test-board player mock-reader mock-writer)]
+          _ (make-move test-board player mock-reader mock-writer)]
       (is (some #{"Invalid spot"} @write-result))
       (is (= 2 (count (filter #{"Pick a spot"} @write-result))))))
 
@@ -75,7 +75,7 @@
           expected-board [E E E
                           E X E
                           E E E]
-          actual-board (make-human-move test-board player mock-reader mock-writer)]
+          actual-board (make-move test-board player mock-reader mock-writer)]
       (is (= expected-board actual-board))))
 )
 
@@ -101,3 +101,4 @@
           players [X O]]
       (is (= nil (get-winner test-board players)))))
 )
+
