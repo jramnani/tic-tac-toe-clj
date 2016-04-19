@@ -64,11 +64,11 @@
     (loop [board board
            player player]
       (cond
-        (rules/winner? board player)
+        (get-winner board players)
         (do
           (reset! game-over true)
           (println (display/board->str board))
-          (println "Game over. Player " player " wins!"))
+          (println "Game over. Player " (get-winner board players) " wins!"))
 
         (rules/draw? board players)
         (do
