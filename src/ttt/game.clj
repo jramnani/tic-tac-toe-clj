@@ -6,6 +6,8 @@
 
 (def player-one "X")
 (def player-two "O")
+(def game-loop-ran (atom nil))
+(def game-over (atom nil))
 
 (defn prompt [message-key]
   (condp = message-key
@@ -16,6 +18,7 @@
 (defn get-human-move
   "Prompt the user to pick a spot. Return the user's choice as an Integer."
   [board player reader writer]
+  (writer (display/board->str board))
   (writer (prompt :pick-spot))
   (let [input (reader)
         spot (Integer/parseInt (string/trim input))]
@@ -54,3 +57,25 @@
   (if (= player-one player)
     player-two
     player-one))
+
+(defn run-game [board players]
+  (let [player (first players)
+        game-loop-ran (reset! game-loop-ran true)]
+    (loop [board board
+           player player]
+      (cond
+        (rules/winner? board player)
+        (do
+          (reset! game-over true)
+          (println (display/board->str board))
+          (println "Game over. Player " player " wins!"))
+
+        (rules/draw? board players)
+        (do
+          (reset! game-over true)
+          (println (display/board->str board))
+          (println "Game over. A draw."))
+
+        :else
+        (recur (make-move board player)
+               (other-player player))))))

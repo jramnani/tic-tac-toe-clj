@@ -129,3 +129,46 @@
     (is (= player-one (other-player player-two))))
 )
 
+(deftest run-game-test
+  (with-redefs [get-human-move (fn [& args] 2)
+                get-ai-move (fn [& args] 8)
+                println (fn [& args] nil)]
+
+    (testing "Given a board and players, then running a game should trigger the game loop to run."
+      (let [test-board [X X E
+                        O O X
+                        X O E]
+            players [player-one player-two]
+            ;; executed for side-effects
+            _ (run-game test-board players)]
+        (is (= true @game-loop-ran))))
+
+    (testing "Given a board where player-one wins, the game should end."
+      (let [test-board [X X E
+                        E E E
+                        E E E]
+            players [player-one player-two]
+            ;; executed for side-effects
+            _ (run-game test-board players)]
+        (is (= true @game-over))))
+
+    (testing "Given a board where player-two wins, the game should end."
+      (let [test-board [E E E
+                        E E E
+                        O O E]
+            players [player-one player-two]
+            ;; executed for side-effects
+            _ (run-game test-board players)]
+        (is (= true @game-over))))
+
+    (testing "Given a board where the game is a draw, the game should end."
+      (let [test-board [X O X
+                        O X O
+                        O X O]
+            players [player-one player-two]
+            ;; executed for side-effects
+            _ (run-game test-board players)]
+        (is (= true @game-over))))
+  )
+)
+
