@@ -49,3 +49,8 @@
 
 (defn get-winner [board players]
   (some #(if (rules/winner? board %1) %1) players))
+
+(defn other-player [player]
+  (if (= player-one player)
+    player-two
+    player-one))
