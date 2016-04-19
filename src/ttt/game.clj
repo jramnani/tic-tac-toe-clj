@@ -33,12 +33,6 @@
 
 (defmulti make-move (fn [board player & args] player))
 
-(defmethod make-move player-two
-  [board player & args]
-  (let [spot (get-ai-move board player)]
-    (when spot
-      (board/take-spot board player spot))))
-
 (defmethod make-move player-one
   ([board player]
    (make-move board player read-line println))
@@ -46,6 +40,12 @@
   ([board player reader writer]
    (let [spot (get-human-move board player reader writer)]
      (board/take-spot board player spot))))
+
+(defmethod make-move player-two
+  [board player & args]
+  (let [spot (get-ai-move board player)]
+    (when spot
+      (board/take-spot board player spot))))
 
 (defn get-winner [board players]
   (some #(if (rules/winner? board %1) %1) players))
