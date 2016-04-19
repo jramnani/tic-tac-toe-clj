@@ -15,18 +15,15 @@
 
 (defn get-human-move
   "Prompt the user to pick a spot. Return the user's choice as an Integer."
-  ([board player]
-   (get-human-move board player read-line println))
-
-  ([board player reader writer]
-   (writer (prompt :pick-spot))
-   (let [input (reader)
-         spot (Integer/parseInt (string/trim input))]
-     (if (board/valid-spot? board spot)
-       spot
-       (do
-         (writer (prompt :invalid-spot))
-         (get-human-move board player reader writer))))))
+  [board player reader writer]
+  (writer (prompt :pick-spot))
+  (let [input (reader)
+        spot (Integer/parseInt (string/trim input))]
+    (if (board/valid-spot? board spot)
+      spot
+      (do
+        (writer (prompt :invalid-spot))
+        (get-human-move board player reader writer)))))
 
 (defn get-ai-move [board player]
   (let [available-spots (board/available-spots board)
