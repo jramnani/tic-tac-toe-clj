@@ -13,6 +13,7 @@
   (condp = message-key
     :pick-spot "Pick a spot"
     :invalid-spot "Invalid spot"
+    :prelude "Welcome to Tic-Tac-Toe!"
     nil))
 
 (defn get-human-move
@@ -61,6 +62,7 @@
 (defn run-game [board players]
   (let [player (first players)
         game-loop-ran (reset! game-loop-ran true)]
+    (println (prompt :prelude))
     (loop [board board
            player player]
       (cond

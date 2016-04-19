@@ -117,6 +117,9 @@
   (testing "Prompt: Invalid spot."
     (is (= "Invalid spot" (prompt :invalid-spot))))
 
+  (testing "Prompt: Prelude."
+    (is (= "Welcome to Tic-Tac-Toe!" (prompt :prelude))))
+
   (testing "Prompt: Invalid message-key returns nil."
     (is (= nil (prompt :bogus-message-key))))
 )
