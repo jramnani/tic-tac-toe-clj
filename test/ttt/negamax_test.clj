@@ -42,3 +42,54 @@
     (is (= 1 (node-color game/player-two))))
 
 )
+
+(deftest node-children-test
+  (testing "Given an empty board, there should be nine children."
+    (let [test-board (board/create-board)
+          player O
+          expected-children 9]
+      (is (= expected-children (count (node-children test-board player))))))
+
+  (testing "Given an empty board, the result should be a list of new boards with the player on each spot."
+    (let [test-board (board/create-board)
+          player O
+          ;; test a sample of the results.
+          expected-board-1 [O E E
+                            E E E
+                            E E E]
+          expected-board-2 [E O E
+                            E E E
+                            E E E]
+          expected-board-3 [E E O
+                            E E E
+                            E E E]
+          actual-children (node-children test-board player)]
+      (is (some #{expected-board-1} actual-children))
+      (is (some #{expected-board-2} actual-children))
+      (is (some #{expected-board-3} actual-children))))
+)
+
+;; In these tests player-two, "O", is using negamax to find the best move.
+(deftest negamax-test
+  (testing "Given a game where player-one wins, the value should be -10."
+    (let [test-board [X X X
+                      E E E
+                      E E E]
+          color -1
+          depth 0]
+      (is (= -10 (negamax test-board depth color)))))
+
+  (testing "Given a game where player-two wins, the value should be 10."
+    (let [test-board [O O O
+                      E E E
+                      E E E]
+          color 1
+          depth 0]
+      (is (= 10 (negamax test-board depth color)))))
+
+  (testing "Given a game that ends in a draw, the value should be 0."
+    (let [test-board (create-tied-board)
+          color 1
+          depth 0]
+      (is (= 0 (negamax test-board depth color)))))
+)
