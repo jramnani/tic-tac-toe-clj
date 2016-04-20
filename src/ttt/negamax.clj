@@ -29,18 +29,20 @@
   (if (terminal-node? board)
     (* color (node-value board))))
 
-(defn negamax-score [board player spot]
+(defn negamax-score [board player spot & {:keys [debug] :or {debug false}}]
   (let [new-board (board/take-spot board player spot)
         next-player (game/other-player player)]
-    (println "Given board.")
-    (println (display/board->str board))
-    (println "New board.")
-    (println "Place player " player " on spot " spot)
-    (println (display/board->str new-board))
+    (when debug
+      (println "Given board.")
+      (println (display/board->str board))
+      (println "New board.")
+      (println "Place player " player " on spot " spot)
+      (println (display/board->str new-board)))
     (if (terminal-node? new-board)
       (let [score (* (node-value new-board)
                      (node-color player))]
-        (println "Score: " score)
+        (when debug
+          (println "Score: " score))
         score)
       (->> (board/available-spots new-board)
            (map #(negamax-score new-board next-player %))
