@@ -21,3 +21,6 @@
 (defn available-spots [board]
   (let [available-spots (keep-indexed #(if (empty? %2) %1) board)]
     available-spots))
+
+(defn empty-board? [board]
+  (= 9 (count (filter empty? board))))

@@ -96,3 +96,12 @@
           expected-spots [3 4 5 6 7 8]]
       (is (= expected-spots (available-spots test-board))))))
 
+(deftest empty-board-test
+  (testing "Given an empty board, return true."
+    (is (= true (empty-board? (create-board)))))
+
+  (testing "Given a board with players on it, return false."
+    (let [test-board (-> (create-board)
+                         (take-spot X 1))]
+      (is (= false (empty-board? test-board)))))
+  )
