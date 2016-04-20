@@ -42,6 +42,6 @@
                      (node-color player))]
         (println "Score: " score)
         score)
-      (let [scores (map #(negamax-score new-board next-player %)
-                        (board/available-spots new-board))]
-        (apply max scores)))))
+      (->> (board/available-spots new-board)
+           (map #(negamax-score new-board next-player %))
+           (apply max)))))
