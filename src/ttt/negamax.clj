@@ -32,7 +32,10 @@
 (defn negamax-score [board player spot]
   (let [new-board (board/take-spot board player spot)
         next-player (game/other-player player)]
-    (println "Computing score for board.")
+    (println "Given board.")
+    (println (display/board->str board))
+    (println "New board.")
+    (println "Place player " player " on spot " spot)
     (println (display/board->str new-board))
     (if (terminal-node? new-board)
       (let [score (* (node-value new-board)

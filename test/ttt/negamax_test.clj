@@ -119,13 +119,33 @@
           spot 8]
       (is (= 0 (negamax-score test-board player spot)))))
 
-  (testing "Given a game with two open spaces, score the winning move the highest."
+  (testing "Given a game with two open spaces, score the winning move at 10."
     (let [test-board [E O E
                       O X O
                       O X X]
           player O
-          winning-spot 0
+          winning-spot 0]
+      (is (= 10 (negamax-score test-board player 0)))))
+
+  (testing "Given a game with two open spaces, score the losing move at -10."
+    (let [test-board [E O E
+                      O X O
+                      O X X]
+          player O
           losing-spot 2]
-      (is (= 10 (negamax-score test-board player 0)))
       (is (= -10 (negamax-score test-board player losing-spot)))))
+
+  (testing "Given a game with three open spots, and two of them will lose the game, the best you can do is play for a draw."
+    (let [test-board [X O X
+                      O X O
+                      E E E]
+          scores (map #(negamax-score test-board O %) (board/available-spots test-board))
+          ]
+      (is (= -10 (negamax-score test-board X 6)))
+      (is (= 0 (negamax-score test-board O 6)))
+      (is (= -10 (negamax-score test-board O 7)))
+      (is (= -10 (negamax-score test-board X 7)))
+      (is (= -10 (negamax-score test-board X 8)))
+      (is (= 0 (negamax-score test-board O 8)))
+      (is (= '(0 -10 0) scores))))
 )
