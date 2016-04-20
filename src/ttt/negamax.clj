@@ -45,3 +45,10 @@
       (->> (board/available-spots new-board)
            (map #(negamax-score new-board next-player %))
            (apply max)))))
+
+
+(defn get-ai-move [board player]
+  (let [preferred-starting-spots [0 2 4 6 8]]
+    (if (= 9 (count (board/available-spots board)))
+      (rand-nth preferred-starting-spots)
+      nil)))

@@ -149,3 +149,11 @@
       (is (= 0 (negamax-score test-board O 8)))
       (is (= '(0 -10 0) scores))))
 )
+
+(deftest get-ai-move-test
+  (testing "Given an empty board, choose one of the best spots (corners or the middle)."
+    (let [test-board (board/create-board)
+          player O
+          best-spots #{0 2 4 6 8}]
+      (is (contains? best-spots (get-ai-move test-board player)))))
+)
