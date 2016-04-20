@@ -48,13 +48,18 @@
            (map #(negamax-score new-board next-player %))
            (apply max)))))
 
-
 (defn get-ai-move [board player]
   (let [preferred-starting-spots [0 2 4 6 8]]
     (if (board/empty-board? board)
       (rand-nth preferred-starting-spots)
-      (let [available-spots (board/available-spots board)
-            scores (map #(negamax-score board player %) available-spots)
-            scored-spots (map list available-spots scores)
-            sorted-scored-spots (reverse (sort-by second scored-spots))]
-        (ffirst sorted-scored-spots)))))
+      (let [available-spots (board/available-spots board)]
+        (->> available-spots
+             (map #(negamax-score board player %))
+             ;; join the list of available spots, with their scores. '((spot, score) ...)
+             (map list available-spots)
+             ;; sort the list of (spot, score) by the score
+             (sort-by second)
+             ;; sort the list in descending order.
+             (reverse)
+             ;; Of the sorted list of '((spot, score) ...), we want the first spot.
+             (ffirst))))))
