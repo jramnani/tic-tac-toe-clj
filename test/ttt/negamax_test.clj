@@ -93,3 +93,39 @@
           depth 0]
       (is (= 0 (negamax test-board depth color)))))
 )
+
+(deftest negamax-score-test
+  (testing "A board where the computer wins should be scored 10."
+    (let [test-board [O O E
+                      X X E
+                      E E E]
+          player O
+          spot 2]
+      (is (= 10 (negamax-score test-board player spot)))))
+
+  (testing "A board where the human wins should be scored -10."
+    (let [test-board [O O E
+                      X X E
+                      E E E]
+          player X
+          spot 5]
+      (is (= -10 (negamax-score test-board player spot)))))
+
+  (testing "If a board is a draw, then score the game at 0."
+    (let [test-board [O X O
+                      X O X
+                      X O E]
+          player X
+          spot 8]
+      (is (= 0 (negamax-score test-board player spot)))))
+
+  (testing "Given a game with two open spaces, score the winning move the highest."
+    (let [test-board [E O E
+                      O X O
+                      O X X]
+          player O
+          winning-spot 0
+          losing-spot 2]
+      (is (= 10 (negamax-score test-board player 0)))
+      (is (= -10 (negamax-score test-board player losing-spot)))))
+)
