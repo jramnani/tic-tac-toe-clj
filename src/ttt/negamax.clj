@@ -49,6 +49,10 @@
 
 (defn get-ai-move [board player]
   (let [preferred-starting-spots [0 2 4 6 8]]
-    (if (= 9 (count (board/available-spots board)))
+    (if (board/empty-board? board)
       (rand-nth preferred-starting-spots)
-      nil)))
+      (let [available-spots (board/available-spots board)
+            scores (map #(negamax-score board player %) available-spots)
+            scored-spots (map list available-spots scores)
+            sorted-scored-spots (reverse (sort-by second scored-spots))]
+        (ffirst sorted-scored-spots)))))

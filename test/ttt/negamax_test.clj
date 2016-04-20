@@ -156,4 +156,36 @@
           player O
           best-spots #{0 2 4 6 8}]
       (is (contains? best-spots (get-ai-move test-board player)))))
+
+  (testing "Given a board with one spot available, return the index for that spot."
+    (let [test-board [X O X
+                      O X O
+                      O X E]
+          player O
+          expected-spot 8]
+      (is (= expected-spot (get-ai-move test-board player)))))
+
+  (testing "Given a board with two spots available, and a winning move is available, then return the index for the winning spot."
+    (let [test-board [E X E
+                      O O X
+                      X O O]
+          player O
+          winning-spot 0]
+      (is (= winning-spot (get-ai-move test-board player)))))
+
+  (testing "Given a board with two spots available, and a blocking move is available, then return the index for the blocking spot."
+    (let [test-board [E O E
+                      O X O
+                      O X X]
+          player O
+          blocking-spot 0]
+      (is (= blocking-spot (get-ai-move test-board player)))))
+
+  (testing "Given a board with three spots available, try to pick the best spot you can."
+    (let [test-board [X O X
+                      O X O
+                      E E E]
+          player O
+          expected-spots #{6 8}]
+      (is (contains? expected-spots (get-ai-move test-board player)))))
 )
