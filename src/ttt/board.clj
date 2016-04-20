@@ -1,7 +1,10 @@
 (ns ttt.board)
 
+;; Board size is the number of spots on the board.
+(def board-size 9)
+
 (defn create-board []
-  (vec (repeatedly 9 str)))
+  (vec (repeatedly board-size str)))
 
 (defn get-spot [board spot]
   (nth board spot))
@@ -23,4 +26,4 @@
     available-spots))
 
 (defn empty-board? [board]
-  (= 9 (count (filter empty? board))))
+  (= board-size (count (filter empty? board))))
