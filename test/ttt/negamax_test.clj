@@ -124,7 +124,7 @@
 
   (testing "Given a board with two spots available, and a blocking move is available, then return the index for the blocking spot."
     (let [test-board [E O E
-                      O X O
+                      X X O
                       O X X]
           player O
           blocking-spot 0]
