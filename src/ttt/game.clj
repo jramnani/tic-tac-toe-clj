@@ -2,7 +2,7 @@
   (require [clojure.string :as string]
            [ttt.board :as board]
            [ttt.display :as display]
-           [ttt.players :refer [player-one player-two]]
+           [ttt.players :refer [player-one player-two other-player]]
            [ttt.rules :as rules]))
 
 (def game-loop-ran (atom nil))
@@ -52,11 +52,6 @@
 
 (defn get-winner [board players]
   (some #(if (rules/winner? board %1) %1) players))
-
-(defn other-player [player]
-  (if (= player-one player)
-    player-two
-    player-one))
 
 (defn run-game [board players]
   (let [player (first players)

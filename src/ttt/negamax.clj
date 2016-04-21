@@ -2,7 +2,7 @@
   (:require [ttt.board :as board]
             [ttt.display :as display]
             [ttt.game :as game]
-            [ttt.players :refer [player-one player-two]]
+            [ttt.players :refer [player-one player-two other-player]]
             [ttt.rules :as rules]))
 
 
@@ -21,7 +21,7 @@
 
 (defn negamax-score [board player spot & {:keys [debug] :or {debug false}}]
   (let [new-board (board/take-spot board player spot)
-        next-player (game/other-player player)]
+        next-player (other-player player)]
     (when debug
       (println "Given board.")
       (println (display/board->str board))
