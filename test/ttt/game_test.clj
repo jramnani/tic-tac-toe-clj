@@ -6,24 +6,20 @@
            [ttt.player :refer [player-one player-two]]))
 
 
-(deftest make-ai-move-test
+(deftest get-ai-move-test
   (testing "Dumb AI: Computer takes the first spot on an empty board."
     (let [test-board (board/create-board)
           player O
-          expected-board [O E E
-                          E E E
-                          E E E]]
-      (is (= expected-board (make-move test-board player)))))
+          expected-spot 0]
+      (is (= expected-spot (get-ai-move test-board player)))))
 
   (testing "Dumb AI: Given a board with a player on it, take the first available spot."
     (let [test-board (-> (board/create-board)
                          (board/take-spot X 0)
                          (board/take-spot X 1))
           player O
-          expected-board [X X O
-                          E E E
-                          E E E]]
-      (is (= expected-board (make-move test-board player)))))
+          expected-spot 2]
+      (is (= expected-spot (get-ai-move test-board player)))))
 )
 
 (deftest get-human-move-test

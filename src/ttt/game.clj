@@ -2,6 +2,7 @@
   (require [clojure.string :as string]
            [ttt.board :as board]
            [ttt.display :as display]
+           [ttt.negamax :as negamax]
            [ttt.player :refer [player-one player-two other-player]]
            [ttt.rules :as rules]))
 
@@ -46,7 +47,7 @@
 
 (defmethod make-move player-two
   [board player & args]
-  (let [spot (get-ai-move board player)]
+  (let [spot (negamax/get-ai-move board player)]
     (when spot
       (board/take-spot board player spot))))
 
