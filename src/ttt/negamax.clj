@@ -2,19 +2,20 @@
   (:require [ttt.board :as board]
             [ttt.display :as display]
             [ttt.game :as game]
+            [ttt.players :refer [player-one player-two]]
             [ttt.rules :as rules]))
 
 
 (defn terminal-node? [board]
-  (rules/game-over? board [game/player-one game/player-two]))
+  (rules/game-over? board [player-one player-two]))
 
 (defn node-value [board]
-  (if (game/get-winner board [game/player-one game/player-two])
+  (if (game/get-winner board [player-one player-two])
     10
     0))
 
 (defn node-color [player]
-  (if (= player game/player-two)
+  (if (= player player-two)
     1
     -1))
 

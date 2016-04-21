@@ -2,10 +2,9 @@
   (require [clojure.string :as string]
            [ttt.board :as board]
            [ttt.display :as display]
+           [ttt.players :refer [player-one player-two]]
            [ttt.rules :as rules]))
 
-(def player-one "X")
-(def player-two "O")
 (def game-loop-ran (atom nil))
 (def game-over (atom nil))
 

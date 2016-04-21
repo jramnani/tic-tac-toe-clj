@@ -2,7 +2,8 @@
   (require [clojure.test :refer :all]
            [ttt.test-helper :refer :all]
            [ttt.board :as board]
-           [ttt.game :refer :all]))
+           [ttt.game :refer :all]
+           [ttt.players :refer [player-one player-two]]))
 
 
 (deftest make-ai-move-test

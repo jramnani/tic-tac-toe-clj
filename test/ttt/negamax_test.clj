@@ -3,6 +3,7 @@
             [ttt.board :as board]
             [ttt.game :as game]
             [ttt.negamax :refer :all]
+            [ttt.players :refer [player-one player-two]]
             [ttt.test-helper :refer :all]))
 
 (deftest terminal-node-test
@@ -36,10 +37,10 @@
 
 (deftest node-color-test
   (testing "Given player-one, the color should be -1."
-    (is (= -1 (node-color game/player-one))))
+    (is (= -1 (node-color player-one))))
 
   (testing "Given player-two, the color should be 1."
-    (is (= 1 (node-color game/player-two))))
+    (is (= 1 (node-color player-two))))
 )
 
 (deftest negamax-score-test
