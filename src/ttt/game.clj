@@ -50,9 +50,6 @@
     (when spot
       (board/take-spot board player spot))))
 
-(defn get-winner [board players]
-  (some #(if (rules/winner? board %1) %1) players))
-
 (defn run-game [board players]
   (let [player (first players)
         game-loop-ran (reset! game-loop-ran true)]
@@ -60,11 +57,11 @@
     (loop [board board
            player player]
       (cond
-        (get-winner board players)
+        (rules/get-winner board players)
         (do
           (reset! game-over true)
           (println (display/board->str board))
-          (println "Game over. Player " (get-winner board players) " wins!"))
+          (println "Game over. Player " (rules/get-winner board players) " wins!"))
 
         (rules/draw? board players)
         (do

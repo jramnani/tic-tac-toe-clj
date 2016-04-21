@@ -10,7 +10,7 @@
   (rules/game-over? board [player-one player-two]))
 
 (defn node-value [board]
-  (if (game/get-winner board [player-one player-two])
+  (if (rules/get-winner board [player-one player-two])
     10
     0))
 

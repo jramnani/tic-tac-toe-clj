@@ -88,29 +88,6 @@
                             E E E]]
         (is (= expected-board (make-move test-board player)))))))
 
-(deftest get-winner-test
-  (testing "Given a board where player-one wins, return player-one."
-    (let [test-board [X X X
-                      E E E
-                      E E E]
-          players [X O]]
-      (is (= X (get-winner test-board players)))))
-
-  (testing "Given a board where player-two wins, return player-two"
-    (let [test-board [O O O
-                      E E E
-                      E E E]
-          players [X O]]
-      (is (= O (get-winner test-board players)))))
-
-  (testing "Given a board where there is no winner, return nil."
-    (let [test-board [X O X
-                      O X O
-                      O X O]
-          players [X O]]
-      (is (= nil (get-winner test-board players)))))
-)
-
 (deftest prompt-test
   (testing "Prompt: Pick spot."
     (is (= "Pick a spot" (prompt :pick-spot))))
