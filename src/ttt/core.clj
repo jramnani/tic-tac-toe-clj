@@ -1,7 +1,7 @@
 (ns ttt.core
   (:require [ttt.board :as board]
             [ttt.game :as game]
-            [ttt.players :refer [player-one player-two]]))
+            [ttt.player :refer [player-one player-two]]))
 
 
 (defn -main []

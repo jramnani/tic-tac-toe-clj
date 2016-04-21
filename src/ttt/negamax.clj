@@ -2,7 +2,7 @@
   (:require [ttt.board :as board]
             [ttt.display :as display]
             [ttt.game :as game]
-            [ttt.players :refer [player-one player-two other-player]]
+            [ttt.player :refer [player-one player-two other-player]]
             [ttt.rules :as rules]))
 
 

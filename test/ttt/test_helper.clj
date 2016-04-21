@@ -1,5 +1,5 @@
 (ns ttt.test-helper
-  (:require [ttt.players :refer :all]))
+  (:require [ttt.player :refer :all]))
 
 (def X player-one)
 (def O player-two)

@@ -2,7 +2,7 @@
   (require [clojure.string :as string]
            [ttt.board :as board]
            [ttt.display :as display]
-           [ttt.players :refer [player-one player-two other-player]]
+           [ttt.player :refer [player-one player-two other-player]]
            [ttt.rules :as rules]))
 
 (def game-loop-ran (atom nil))

@@ -3,7 +3,7 @@
             [ttt.board :as board]
             [ttt.game :as game]
             [ttt.negamax :refer :all]
-            [ttt.players :refer [player-one player-two]]
+            [ttt.player :refer [player-one player-two]]
             [ttt.test-helper :refer :all]))
 
 (deftest terminal-node-test
