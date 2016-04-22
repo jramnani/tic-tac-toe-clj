@@ -10,8 +10,8 @@
 
 (defn node-value [board player]
   (cond
-    (rules/winner? board player) 10
-    (rules/winner? board (other-player player)) -10
+    (rules/winner? board player) 1
+    (rules/winner? board (other-player player)) -1
     :else 0))
 
 (defn node-color [player]
