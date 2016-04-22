@@ -34,7 +34,7 @@
           (println "Score: " score))
         score)
       (->> (board/available-spots new-board)
-           (map #(negamax-score new-board next-player %))
+           (map #(negamax-score new-board next-player % :debug debug))
            (apply max)))))
 
 (defn get-ai-move [board player]
