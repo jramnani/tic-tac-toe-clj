@@ -25,14 +25,24 @@
 )
 
 (deftest node-value-test
-  (testing "Given a board where a player has won, the value should be 10"
+  (testing "Given a board where the player has won, return 10."
     (let [test-board [O O O
                       E E E
-                      E E E]]
-      (is (= 10 (node-value test-board)))))
+                      E E E]
+          player O]
+      (is (= 10 (node-value test-board player)))))
+
+  (testing "Given a board where the player has lost, return -10."
+    (let [test-board [X X X
+                      E E E
+                      E E E]
+          player O]
+      (is (= -10 (node-value test-board player)))))
 
   (testing "Given a board where the game is a draw, the value should be 0"
-    (is (= 0 (node-value (create-tied-board)))))
+    (let [test-board (create-tied-board)
+          player O]
+    (is (= 0 (node-value test-board player)))))
 )
 
 (deftest node-color-test

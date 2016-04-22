@@ -8,10 +8,11 @@
 (defn terminal-node? [board]
   (rules/game-over? board [player-one player-two]))
 
-(defn node-value [board]
-  (if (rules/get-winner board [player-one player-two])
-    10
-    0))
+(defn node-value [board player]
+  (cond
+    (rules/winner? board player) 10
+    (rules/winner? board (other-player player)) -10
+    :else 0))
 
 (defn node-color [player]
   (if (= player player-two)
@@ -28,7 +29,7 @@
       (println "Place player " player " on spot " spot)
       (println (display/board->str new-board)))
     (if (terminal-node? new-board)
-      (let [score (* (node-value new-board)
+      (let [score (* (node-value new-board player)
                      (node-color player))]
         (when debug
           (println "Score: " score))
