@@ -48,14 +48,6 @@
     (is (= 0 (node-value test-board player)))))
 )
 
-(deftest node-color-test
-  (testing "Given player-one, the color should be -1."
-    (is (= -1 (node-color player-one))))
-
-  (testing "Given player-two, the color should be 1."
-    (is (= 1 (node-color player-two))))
-)
-
 (deftest negamax-score-test
   (testing "A spot where the player can win should be scored at 1."
     (let [test-board [O O E

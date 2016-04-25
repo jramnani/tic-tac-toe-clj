@@ -14,11 +14,6 @@
     (rules/winner? board (other-player player)) -1
     :else 0))
 
-(defn node-color [player]
-  (if (= player player-two)
-    1
-    -1))
-
 (defn negamax-score [board player spot & {:keys [debug] :or {debug false}}]
   (let [new-board (board/take-spot board player spot)
         next-player (other-player player)]
