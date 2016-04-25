@@ -6,7 +6,7 @@
             [ttt.player :refer [player-one player-two]]
             [ttt.test-helper :refer :all]))
 
-(defn debug-scores [board player]
+(defn get-scores [board player]
   (map #(negamax-score board player %1) (board/available-spots board)))
 
 (deftest terminal-node-test
@@ -49,21 +49,26 @@
 )
 
 (deftest negamax-score-test
-  (testing "A spot where the player can win should be scored at 10."
+  (testing "A spot where the player can win should be scored as the best move."
     (let [test-board [O O E
                       X X E
                       E E E]
           player O
-          spot 2]
-      (is (= 10 (negamax-score test-board player spot)))))
+          spot 2
+          scores (get-scores test-board player)
+          best-score (first scores)]
+      (is (= best-score (negamax-score test-board player spot)))))
 
-  (testing "A spot where the player can block the opponent should be scored at 10."
+  (testing "A spot where the player can block the opponent should be scored as the second best move."
     (let [test-board [O O E
                       X X E
                       E E E]
           player O
-          spot 5]
-      (is (= 10 (negamax-score test-board player spot)))))
+          spot 5
+          scores (get-scores test-board player)
+          second-best-score (second scores)]
+      (is (= second-best-score (negamax-score test-board player spot)))
+      ))
 
   (testing "A spot that generates a draw should be scored at 0."
     (let [test-board [O X O
@@ -81,30 +86,14 @@
           winning-spot 0]
       (is (= 10 (negamax-score test-board player 0)))))
 
-  (testing "Given a game with two open spaces, score the losing move at -10."
+  (testing "Given a game with two open spaces, score the losing move at -9."
     (let [test-board [E O E
                       O X O
                       O X X]
           player O
           losing-spot 2]
-      (is (= -10 (negamax-score test-board player losing-spot)))))
+      (is (= -9 (negamax-score test-board player losing-spot)))))
 
-  (testing "Given a game with three open spots, and two of them will lose the game, the best you can do is play for a draw."
-    (let [test-board [X O X
-                      O X O
-                      E E E]
-          scores (map #(negamax-score test-board O %) (board/available-spots test-board))
-          ]
-      (is (= 10 (negamax-score test-board X 6)) "Player X takes spot 6")
-      (is (= 0 (negamax-score test-board O 6)) "Player O takes spot 6")
-
-      (is (= -10 (negamax-score test-board O 7)) "Player O takes spot 7")
-      (is (= 10 (negamax-score test-board X 7)) "Player X takes spot 7")
-
-      (is (= 10 (negamax-score test-board X 8)) "Player X takes spot 8")
-      (is (= 0 (negamax-score test-board O 8)) "Player O takes spot 8")
-
-      (is (= '(0 -10 0) scores) "Score list for the open spots")))
 )
 
 (deftest get-ai-move-test
@@ -129,6 +118,14 @@
           player O
           winning-spot 0]
       (is (= winning-spot (get-ai-move test-board player)))))
+
+  (testing "Given a board where the opponent chooses a corner, choose the middle to prevent a fork."
+    (let [test-board [X E E
+                      E E E
+                      E E E]
+          player O
+          expected-spot 4]
+      (is (= expected-spot (get-ai-move test-board player)))))
 
   (testing "Given a board with two spots available, and a blocking move is available, then return the index for the blocking spot."
     (let [test-board [E O E
