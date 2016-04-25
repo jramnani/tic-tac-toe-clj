@@ -6,6 +6,9 @@
             [ttt.player :refer [player-one player-two]]
             [ttt.test-helper :refer :all]))
 
+(defn debug-scores [board player]
+  (map #(negamax-score board player %1) (board/available-spots board)))
+
 (deftest terminal-node-test
   (testing "Given a game in progress, return false."
     (let [test-board [X E E
@@ -54,7 +57,7 @@
 )
 
 (deftest negamax-score-test
-  (testing "A board where the computer wins should be scored 1."
+  (testing "A spot where the player can win should be scored at 1."
     (let [test-board [O O E
                       X X E
                       E E E]
@@ -62,15 +65,15 @@
           spot 2]
       (is (= 1 (negamax-score test-board player spot)))))
 
-  (testing "A board where the human wins should be scored -1."
+  (testing "A spot where the player can block the opponent should be scored at 1."
     (let [test-board [O O E
                       X X E
                       E E E]
-          player X
+          player O
           spot 5]
-      (is (= -1 (negamax-score test-board player spot)))))
+      (is (= 1 (negamax-score test-board player spot)))))
 
-  (testing "If a board is a draw, then score the game at 0."
+  (testing "A spot that generates a draw should be scored at 0."
     (let [test-board [O X O
                       X O X
                       X O E]
@@ -100,13 +103,16 @@
                       E E E]
           scores (map #(negamax-score test-board O %) (board/available-spots test-board))
           ]
-      (is (= -1 (negamax-score test-board X 6)))
-      (is (= 0 (negamax-score test-board O 6)))
-      (is (= -1 (negamax-score test-board O 7)))
-      (is (= -1 (negamax-score test-board X 7)))
-      (is (= -1 (negamax-score test-board X 8)))
-      (is (= 0 (negamax-score test-board O 8)))
-      (is (= '(0 -1 0) scores))))
+      (is (= 1 (negamax-score test-board X 6)) "Player X takes spot 6")
+      (is (= 0 (negamax-score test-board O 6)) "Player O takes spot 6")
+
+      (is (= -1 (negamax-score test-board O 7)) "Player O takes spot 7")
+      (is (= 1 (negamax-score test-board X 7)) "Player X takes spot 7")
+
+      (is (= 1 (negamax-score test-board X 8)) "Player X takes spot 8")
+      (is (= 0 (negamax-score test-board O 8)) "Player O takes spot 8")
+
+      (is (= '(0 -1 0) scores) "Score list for the open spots")))
 )
 
 (deftest get-ai-move-test

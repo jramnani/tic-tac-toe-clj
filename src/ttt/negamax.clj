@@ -23,11 +23,10 @@
   (let [new-board (board/take-spot board player spot)
         next-player (other-player player)]
     (if (terminal-node? new-board)
-      (let [score (* (node-value new-board player)
-                     (node-color player))]
+      (let [score (node-value new-board player)]
         score)
       (->> (board/available-spots new-board)
-           (map #(negamax-score new-board next-player % :debug debug))
+           (map (comp - #(negamax-score new-board next-player % :debug debug)))
            (apply max)))))
 
 (defn get-ai-move [board player]
