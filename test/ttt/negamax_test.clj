@@ -33,14 +33,14 @@
                       E E E
                       E E E]
           player O]
-      (is (= 1 (node-value test-board player)))))
+      (is (= 10 (node-value test-board player)))))
 
   (testing "Given a board where the player has lost, return -1."
     (let [test-board [X X X
                       E E E
                       E E E]
           player O]
-      (is (= -1 (node-value test-board player)))))
+      (is (= -10 (node-value test-board player)))))
 
   (testing "Given a board where the game is a draw, the value should be 0"
     (let [test-board (create-tied-board)
@@ -49,21 +49,21 @@
 )
 
 (deftest negamax-score-test
-  (testing "A spot where the player can win should be scored at 1."
+  (testing "A spot where the player can win should be scored at 10."
     (let [test-board [O O E
                       X X E
                       E E E]
           player O
           spot 2]
-      (is (= 1 (negamax-score test-board player spot)))))
+      (is (= 10 (negamax-score test-board player spot)))))
 
-  (testing "A spot where the player can block the opponent should be scored at 1."
+  (testing "A spot where the player can block the opponent should be scored at 10."
     (let [test-board [O O E
                       X X E
                       E E E]
           player O
           spot 5]
-      (is (= 1 (negamax-score test-board player spot)))))
+      (is (= 10 (negamax-score test-board player spot)))))
 
   (testing "A spot that generates a draw should be scored at 0."
     (let [test-board [O X O
@@ -73,21 +73,21 @@
           spot 8]
       (is (= 0 (negamax-score test-board player spot)))))
 
-  (testing "Given a game with two open spaces, score the winning move at 1."
+  (testing "Given a game with two open spaces, score the winning move at 10."
     (let [test-board [E O E
                       O X O
                       O X X]
           player O
           winning-spot 0]
-      (is (= 1 (negamax-score test-board player 0)))))
+      (is (= 10 (negamax-score test-board player 0)))))
 
-  (testing "Given a game with two open spaces, score the losing move at -1."
+  (testing "Given a game with two open spaces, score the losing move at -10."
     (let [test-board [E O E
                       O X O
                       O X X]
           player O
           losing-spot 2]
-      (is (= -1 (negamax-score test-board player losing-spot)))))
+      (is (= -10 (negamax-score test-board player losing-spot)))))
 
   (testing "Given a game with three open spots, and two of them will lose the game, the best you can do is play for a draw."
     (let [test-board [X O X
@@ -95,16 +95,16 @@
                       E E E]
           scores (map #(negamax-score test-board O %) (board/available-spots test-board))
           ]
-      (is (= 1 (negamax-score test-board X 6)) "Player X takes spot 6")
+      (is (= 10 (negamax-score test-board X 6)) "Player X takes spot 6")
       (is (= 0 (negamax-score test-board O 6)) "Player O takes spot 6")
 
-      (is (= -1 (negamax-score test-board O 7)) "Player O takes spot 7")
-      (is (= 1 (negamax-score test-board X 7)) "Player X takes spot 7")
+      (is (= -10 (negamax-score test-board O 7)) "Player O takes spot 7")
+      (is (= 10 (negamax-score test-board X 7)) "Player X takes spot 7")
 
-      (is (= 1 (negamax-score test-board X 8)) "Player X takes spot 8")
+      (is (= 10 (negamax-score test-board X 8)) "Player X takes spot 8")
       (is (= 0 (negamax-score test-board O 8)) "Player O takes spot 8")
 
-      (is (= '(0 -1 0) scores) "Score list for the open spots")))
+      (is (= '(0 -10 0) scores) "Score list for the open spots")))
 )
 
 (deftest get-ai-move-test
