@@ -7,8 +7,8 @@ pipeline {
 
     stage("Build & Test") {
       steps {
-        echo "Build using Leiningen"
-        sh "lein test"
+        sh "lein with-profile test test2junit"
+        junit(testResults: "target/junit/**/*.xml", allowEmptyResults: true)
       }
     }
   }
