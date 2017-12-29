@@ -4,9 +4,12 @@ pipeline {
   agent any
 
   stages {
+
     stage("Build & Test") {
-      echo "Build using Leiningen"
-      sh "lein test"
+      steps {
+        echo "Build using Leiningen"
+        sh "lein test"
+      }
     }
   }
 }
