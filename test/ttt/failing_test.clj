@@ -1,4 +1,4 @@
-(ns ttt.failing-etst
+(ns ttt.failing-test
   (:require [clojure.test :refer :all]
             [ttt.test-helper :refer :all]
             [ttt.board :refer :all]))
