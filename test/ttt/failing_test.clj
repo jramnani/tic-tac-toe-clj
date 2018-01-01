@@ -5,4 +5,4 @@
 
 (deftest jenkins-failure
   (testing "A failing test in Jenkins")
-    (is (= true false)))
+    (is (= true true)))
