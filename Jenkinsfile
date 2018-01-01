@@ -10,12 +10,6 @@ pipeline {
         sh "lein with-profile test test2junit"
       }
     }
-
-    stage("Human Input") {
-      steps {
-        input "Shall I continue?"
-      }
-    }
   }
 
   post {
