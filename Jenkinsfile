@@ -2,10 +2,7 @@
 
 pipeline {
   agent {
-    docker {
-      image 'clojure/lein'
-      args '-v $HOME/.m2'
-    }
+    label 'docker'
   }
 
   stages {
