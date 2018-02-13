@@ -1,7 +1,12 @@
 #!/usr/bin/env groovy
 
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'clojure/lein'
+      args '-v $HOME/.m2'
+    }
+  }
 
   stages {
 
