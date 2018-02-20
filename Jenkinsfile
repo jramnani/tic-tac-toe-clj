@@ -1,9 +1,12 @@
 #!/usr/bin/env groovy
 
 pipeline {
-  agent {
-    label 'docker'
-  }
+
+    agent {
+        docker {
+            image 'clojure:lein-2.8.1'
+        }
+    }
 
   stages {
 
