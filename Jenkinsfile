@@ -5,6 +5,7 @@ pipeline {
     agent {
         docker {
             image 'clojure:lein-2.8.1'
+            args '-v /var/lib/jenkins/.lein:.lein -v /var/lib/jenkins/.m2:.m2'
         }
     }
 
